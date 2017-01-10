@@ -1,1 +1,1 @@
-# flink-scala
+# Flink template app
