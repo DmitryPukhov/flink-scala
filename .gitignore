@@ -1,5 +1,5 @@
 *~
-/.idea/**
+
 *.iml
 *.class
 
@@ -58,3 +58,8 @@ com_crashlytics_export_strings.xml
 crashlytics.properties
 crashlytics-build.properties
 fabric.properties
+
+.classpath
+.settings/
+.idea/
+.project
