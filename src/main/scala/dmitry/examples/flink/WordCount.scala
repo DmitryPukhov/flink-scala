@@ -1,4 +1,4 @@
-package myFlink
+package dmitry.examples.flink
 
 import org.apache.flink.api.scala._
 

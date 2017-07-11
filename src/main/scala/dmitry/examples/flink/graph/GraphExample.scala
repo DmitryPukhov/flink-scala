@@ -1,4 +1,4 @@
-package myFlink.graph
+package dmitry.examples.flink.graph
 
 import java.util
 
@@ -14,9 +14,10 @@ import org.apache.flink.types.NullValue
   *
   * Gelly experiments.
   */
-object GraphSample {
+object GraphExample {
   def main(args: Array[String]) {
     val env = ExecutionEnvironment.getExecutionEnvironment
+
 
     // Edges valued
     val edges = env.fromElements(new Edge(1L, 2L, "Edge 1-2"),
@@ -37,14 +38,17 @@ object GraphSample {
     // Build graph
     val graph = Graph.fromDataSet(vertices, edges,env)
 
-    val graph2 = graph.mapVertices(v => v.getValue + "_v2")
-      .mapEdges(e => e.getValue + "_e2")
-      .subgraph(v => v.getId > 1, e => e.getSource > 1)
-      .addVertex(new Vertex(6L, "Vertex 6"))
-      .addEdge(vertices.collect()(0), new Vertex(7L, "Vertex7"), "New edge1-7")
+    print(s"vertices=${graph.numberOfVertices()}")
+    print(s"edges=${graph.numberOfEdges()}")
 
-    // Do actions on graph
-    graph2.getTriplets.print()
+//    val graph2 = graph.mapVertices(v => v.getValue + "_v2")
+//      .mapEdges(e => e.getValue + "_e2")
+//      .subgraph(v => v.getId > 1, e => e.getSource > 1)
+//      .addVertex(new Vertex(6L, "Vertex 6"))
+//      .addEdge(vertices.collect()(0), new Vertex(7L, "Vertex7"), "New edge1-7")
+//
+//    // Do actions on graph
+//    graph2.getTriplets.print()
 
   }
 }
