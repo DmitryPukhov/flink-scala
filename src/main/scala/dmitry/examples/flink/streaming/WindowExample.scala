@@ -21,7 +21,51 @@ object WindowExample {
     */
   def main(args: Array[String]): Unit = {
 
-    import org.apache.flink.streaming.api.scala._
+    // Run examples
+
+    globalWindow
+
+    fold
+
+    env.execute()
+
+  }
+
+  /**
+    * Global window and fold example
+    *
+    * @return
+    */
+  def fold = {
+
+    // Create input stream
+    val input = env.fromElements(
+      ("home", "dog"),
+      ("home", "cat"),
+      ("wild", "wolf"),
+      ("wild", "leopard"))
+
+    // Each global window is animal category.
+    // We accumulate animals there and calculate counts
+    val ds: DataStream[(String, String)] = input.keyBy(0)
+      .window(GlobalWindows.create())
+      .trigger(new OnNewElementTrigger[Any, GlobalWindow])
+      .fold(("", ""))((a, b) => {
+        // Just write all animals in one line
+        val key = if(a._1.nonEmpty) a._1 else b._1
+        (key, a._2 + " " + b._2)
+      })
+
+    ds.print()
+
+  }
+
+  /**
+    * Global window and apply example
+    *
+    * @return
+    */
+  def globalWindow = {
 
     // Create input stream
     val input = env.fromElements(
@@ -39,10 +83,8 @@ object WindowExample {
       .apply((key, window, input, out) => {
 
         out.collect((key.getField(0), input.toSeq.length))
-    })
+      })
     ds.print()
-
-    env.execute()
 
   }
 
