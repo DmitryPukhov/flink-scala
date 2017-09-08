@@ -23,9 +23,11 @@ object WindowExample {
 
     // Run examples
 
-    globalWindow
+    globalWindow.print()
 
-    fold
+    fold.print()
+
+
 
     env.execute()
 
@@ -56,7 +58,8 @@ object WindowExample {
         (key, a._2 + " " + b._2)
       })
 
-    ds.print()
+    // Return data stream
+    ds
 
   }
 
@@ -84,7 +87,9 @@ object WindowExample {
 
         out.collect((key.getField(0), input.toSeq.length))
       })
-    ds.print()
+
+    // Return data stream
+    ds
 
   }
 
